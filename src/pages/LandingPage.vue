@@ -3,18 +3,20 @@ import Hero from "../components/LandingPage/Hero.vue";
 import Navbar from "../components/LandingPage/Navbar.vue";
 import SponsorContainer from "../components/LandingPage/SponsorContainer.vue";
 import MissionSection from "../components/LandingPage/MissionSection.vue";
-import FeatureSection from "../components/LandingPage/FeatureSection.vue";
-import QuoteSection from "../components/LandingPage/QuoteSection.vue";
-import OtherQuoteSection from "../components/LandingPage/OtherQuoteSection.vue";
-import StatisticSection from "../components/LandingPage/StatisticSection.vue";
-import TestimonialSection from "../components/LandingPage/TestimonialSection.vue";
-import UpdateSection from "../components/LandingPage/UpdateSection.vue";
+// import FeatureSection from "../components/LandingPage/FeatureSection.vue";
+// import QuoteSection from "../components/LandingPage/QuoteSection.vue";
+// import OtherQuoteSection from "../components/LandingPage/OtherQuoteSection.vue";
+// import StatisticSection from "../components/LandingPage/StatisticSection.vue";
+// import TestimonialSection from "../components/LandingPage/TestimonialSection.vue";
+// import UpdateSection from "../components/LandingPage/UpdateSection.vue";
 import Footer from "../components/LandingPage/Footer.vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "../stores/authStore";
 import { watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { useSeoMeta } from "@unhead/vue";
+import RenderOnViewPortEntry from "../components/LazyLoad/RenderOnViewPortEntry.vue";
+import { defineAsyncComponent } from "vue";
 
 useSeoMeta({
   title: "SSR RSbuild Landing Page - Findsoed Rework",
@@ -38,6 +40,30 @@ watchEffect(() => {
     navigate.push("/home");
   }
 });
+
+const LazyFeatureSection = defineAsyncComponent(
+  () => import("../components/LandingPage/FeatureSection.vue")
+);
+
+const LazyQuoteSection = defineAsyncComponent(
+  () => import("../components/LandingPage/QuoteSection.vue")
+);
+
+const LazyOtherQuoteSection = defineAsyncComponent(
+  () => import("../components/LandingPage/OtherQuoteSection.vue")
+);
+
+const LazyStatisticSection = defineAsyncComponent(
+  () => import("../components/LandingPage/StatisticSection.vue")
+);
+
+const LazyTestimonialSection = defineAsyncComponent(
+  () => import("../components/LandingPage/TestimonialSection.vue")
+);
+
+const LazyUpdateSection = defineAsyncComponent(
+  () => import("../components/LandingPage/UpdateSection.vue")
+);
 </script>
 
 <template>
@@ -50,12 +76,24 @@ watchEffect(() => {
       <Hero />
       <SponsorContainer />
       <MissionSection />
-      <FeatureSection />
-      <QuoteSection />
-      <OtherQuoteSection />
-      <StatisticSection />
-      <TestimonialSection />
-      <UpdateSection />
+      <RenderOnViewPortEntry :threshold="0.35">
+        <LazyFeatureSection />
+      </RenderOnViewPortEntry>
+      <RenderOnViewPortEntry :threshold="0.35">
+        <LazyQuoteSection />
+      </RenderOnViewPortEntry>
+      <RenderOnViewPortEntry :threshold="0.35">
+        <LazyOtherQuoteSection />
+      </RenderOnViewPortEntry>
+      <RenderOnViewPortEntry :threshold="0.35">
+        <LazyStatisticSection />
+      </RenderOnViewPortEntry>
+      <RenderOnViewPortEntry :threshold="0.35">
+        <LazyTestimonialSection />
+      </RenderOnViewPortEntry>
+      <RenderOnViewPortEntry :threshold="0.35">
+        <LazyUpdateSection />
+      </RenderOnViewPortEntry>
       <Footer />
     </div>
   </main>
