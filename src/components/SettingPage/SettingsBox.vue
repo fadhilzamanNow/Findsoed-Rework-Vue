@@ -3,6 +3,11 @@ import { Tabs, TabPane } from "ant-design-vue";
 import PersonalisationSettings from "./PersonalisationSettings.vue";
 import HistorySettings from "./HistorySettings.vue";
 import BreadCrumbComp from "../BreadCrumb/BreadCrumbComp.vue";
+import { defineAsyncComponent } from "vue";
+
+const LazyHistorySettings = defineAsyncComponent(
+  () => import("./HistorySettings.vue")
+);
 </script>
 
 <template>
@@ -15,7 +20,7 @@ import BreadCrumbComp from "../BreadCrumb/BreadCrumbComp.vue";
             <PersonalisationSettings />
           </TabPane>
           <TabPane key="1" tab="Daftar Barang">
-            <HistorySettings />
+            <LazyHistorySettings />
           </TabPane>
         </Tabs>
       </div>

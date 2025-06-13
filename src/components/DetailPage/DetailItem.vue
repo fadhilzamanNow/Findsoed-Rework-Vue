@@ -69,6 +69,10 @@ const LazyDetailLeafletMap = defineAsyncComponent(
   () => import("./DetailLeafletMap.vue")
 );
 
+const LazyDetailItemModal = defineAsyncComponent(
+  () => import("./DetailItemModal.vue")
+);
+
 const isModalOpen = ref<boolean>(false);
 const commentVal = ref<string>("");
 const isBeingSent = ref<boolean>(false);
@@ -119,6 +123,7 @@ watchEffect(() => {
 });
 
 const toggleModal = () => {
+  console.log("changing ");
   isModalOpen.value = !isModalOpen.value;
 };
 
@@ -170,14 +175,6 @@ const imageDetailProps = computed(() => {
 const detailCreateProps = computed<AvatarProps>(() => ({
   src: `http://localhost:3500/static/images/${postDetail.value?.userProfile}`,
   shape: "square",
-}));
-
-const modalDetailProps = computed<ModalProps>(() => ({
-  open: isModalOpen.value,
-  title: postDetail.value?.itemName,
-  centered: true,
-  footer: null,
-  onCancel: toggleModal,
 }));
 
 const modalDetailMapProps = computed<ModalProps>(() => ({
@@ -372,62 +369,19 @@ watch(
       </div>
     </div>
   </div>
-  <Modal v-bind="modalDetailProps">
-    <Flex vertical gap="20">
-      <div class="grid grid-cols-2">
-        <Flex vertical gap="4">
-          <h1 class="text-xs font-medium">Kategori</h1>
-          <span class="font-light text-xs">
-            {{ postDetail?.itemCategory }}
-          </span>
-        </Flex>
-        <Flex vertical gap="4">
-          <h1 class="text-xs font-medium">Kontak</h1>
-          <span class="font-light text-xs">
-            {{ postDetail?.phoneNumber }}
-          </span>
-        </Flex>
-      </div>
-      <div class="grid grid-cols-2">
-        <Flex vertical gap="4">
-          <h1 class="text-xs font-medium">Tanggal Hilang</h1>
-          <span class="font-light text-xs">
-            {{ postDetail?.itemLostDate }}
-          </span>
-        </Flex>
-        <Flex vertical gap="4">
-          <h1 class="text-xs font-medium">Status Barang</h1>
-          <span
-            :class="`px-2 py-0.5 rounded-md text-white  max-w-max text-xs',
-            ${
-              postDetail?.statusName === 'Hilang'
-                ? 'bg-red-500'
-                : 'bg-green-400'
-            }
-            `"
-          >
-            {{ postDetail?.statusName }}
-          </span>
-        </Flex>
-      </div>
-      <Flex vertical gap="4">
-        <h1 class="text-xs font-medium">Deskripsi</h1>
-        <span
-          class="max-w-[350px] overflow-x-hidden hover:overflow-y-scroll text-xs font-light"
-        >
-          {{ postDetail?.itemDetail }}
-        </span>
-      </Flex>
-    </Flex>
-  </Modal>
-  <Modal v-bind="modalDetailMapProps">
-    <div class="">
-      <!-- @vue-ignore -->
-      <LazyDetailLeafletMap
-        :latitude="postDetail?.coordinate.latitude"
-        :longitude="postDetail?.coordinate.longitude"
-        :location-name="postDetail?.coordinate.locationName"
-      />
-    </div>
-  </Modal>
+  <LazyDetailItemModal
+    v-if="isModalOpen"
+    :postDetail="postDetail"
+    :isModalOpen="isModalOpen"
+    @toggleModal="toggleModal"
+  />
+  <!-- @vue-ignore -->
+  <LazyDetailLeafletMap
+    v-if="isModalOpenMap"
+    :latitude="postDetail?.coordinate.latitude"
+    :longitude="postDetail?.coordinate.longitude"
+    :location-name="postDetail?.coordinate.locationName"
+    :isModalOpenMap="isModalOpenMap"
+    @toggle-modal-map="toggleModalMap"
+  />
 </template>
