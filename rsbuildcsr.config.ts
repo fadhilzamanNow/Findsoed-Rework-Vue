@@ -7,11 +7,16 @@ export default defineConfig({
   plugins: [pluginVue()],
   source: {
     define: {
-      /* @ts-ignore */
       BACKEND_URL: JSON.stringify(parsed.PUBLIC_BACKEND_URL),
     },
   },
   html: {
     template: "./template.html",
+  },
+  performance: {
+    chunkSplit: {
+      maxSize: 500000,
+      strategy: "split-by-size",
+    },
   },
 });
