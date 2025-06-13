@@ -8,6 +8,9 @@ const { parsed } = loadEnv();
 console.log("ssr here");
 export default defineConfig({
   plugins: [pluginVue()],
+  output: {
+    minify: false,
+  },
   environments: {
     web: {
       output: {
@@ -40,11 +43,18 @@ export default defineConfig({
   },
   source: {
     define: {
-      /* @ts-ignore */
       BACKEND_URL: JSON.stringify(parsed.PUBLIC_BACKEND_URL),
     },
   },
   tools: {
-    rspack: [new RsdoctorRspackPlugin({})],
+    rspack: {
+      plugins: [
+        new RsdoctorRspackPlugin({
+          supports: {
+            generateTileGraph: true,
+          },
+        }),
+      ],
+    },
   },
 });

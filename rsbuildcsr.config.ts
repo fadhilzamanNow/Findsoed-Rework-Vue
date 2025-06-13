@@ -1,17 +1,31 @@
 import { defineConfig, loadEnv } from "@rsbuild/core";
 import { pluginVue } from "@rsbuild/plugin-vue";
+import { RsdoctorRspackPlugin } from "@rsdoctor/rspack-plugin";
 
 const { parsed } = loadEnv();
 
 export default defineConfig({
   plugins: [pluginVue()],
+  output: {
+    minify: false,
+  },
   source: {
     define: {
-      /* @ts-ignore */
       BACKEND_URL: JSON.stringify(parsed.PUBLIC_BACKEND_URL),
     },
   },
   html: {
     template: "./template.html",
+  },
+  tools: {
+    rspack: {
+      plugins: [
+        new RsdoctorRspackPlugin({
+          supports: {
+            generateTileGraph: true,
+          },
+        }),
+      ],
+    },
   },
 });
