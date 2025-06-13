@@ -15,7 +15,7 @@ export default defineConfig({
   },
   performance: {
     chunkSplit: {
-      maxSize: 500000,
+      maxSize: 1000000,
       strategy: "split-by-size",
     },
   },
