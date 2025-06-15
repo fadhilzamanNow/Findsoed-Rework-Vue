@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
 
   console.log("isi env : ", env);
   return {
-    plugins: [vue(), analyzer()],
+    plugins: [vue()],
     define: {
       BACKEND_URL: JSON.stringify(env.VITE_BACKEND_URL),
     },
