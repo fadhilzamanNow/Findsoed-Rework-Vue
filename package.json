@@ -11,7 +11,7 @@
     "preview:rs-csr": "rsbuild preview --port 3050",
     "dev:vite-csr": "cross-env NODE_ENV=development vite",
     "build:vite-csr": "cross-env NODE_ENV=production vite build",
-    "preview:vite-csr": "vite preview",
+    "preview:vite-csr": "vite preview --port 3050",
     "dev:vite-ssr": "cross-env NODE_ENV=development node ./vite-server.js",
     "build:vite-ssr": "vite build --outDir dist/client && vite build --ssr src/index.server.ts --outDir dist/server",
     "preview:vite-ssr": "cross-env NODE_ENV=production node ./vite-server.js",
