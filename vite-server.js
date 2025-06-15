@@ -6,7 +6,7 @@ import { transformHtmlTemplate } from "@unhead/vue/server";
 
 // Constants
 const isProduction = process.env.NODE_ENV === "production";
-const port = process.env.PORT || 5173;
+const port = process.env.PORT || 3050;
 const base = process.env.BASE || "/";
 
 // Cached production assets
