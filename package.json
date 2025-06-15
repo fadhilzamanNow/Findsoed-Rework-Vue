@@ -8,7 +8,7 @@
     "preview:rs-ssr": "node ./prod-server.mjs",
     "build:rs-csr": "cross-env NODE_ENV=production rsbuild build -c ./rsbuildcsr.config.ts",
     "dev:rs-csr": "cross-env NODE_ENV=development rsbuild dev -c ./rsbuildcsr.config.ts",
-    "preview:rs-csr": "rsbuild preview",
+    "preview:rs-csr": "rsbuild preview --port 3050",
     "dev:vite-csr": "cross-env NODE_ENV=development vite",
     "build:vite-csr": "cross-env NODE_ENV=production vite build",
     "preview:vite-csr": "vite preview",
