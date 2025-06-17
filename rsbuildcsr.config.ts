@@ -19,4 +19,7 @@ export default defineConfig({
       strategy: "split-by-size",
     },
   },
+  output: {
+    minify: false,
+  },
 });
