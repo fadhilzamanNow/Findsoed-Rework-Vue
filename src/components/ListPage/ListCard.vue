@@ -3,11 +3,18 @@ import { storeToRefs } from "pinia";
 import { usePostStore } from "../../stores/postStore";
 import { LoadingOutlined } from "@ant-design/icons-vue";
 import { defineAsyncComponent } from "vue";
+import Loading from "../Loading/Loading.vue";
 
 const { postData, isLoading } = storeToRefs(usePostStore());
 
-const LazyCard = defineAsyncComponent(() => import("./Card.vue"));
-const LazyEmpty = defineAsyncComponent(() => import("./EmptyCard.vue"));
+const LazyCard = defineAsyncComponent({
+  loader : () => import("./Card.vue"),
+  loadingComponent : Loading
+});
+const LazyEmpty = defineAsyncComponent({
+  loader : () => import("./EmptyCard.vue"),
+  loadingComponent : Loading
+});
 </script>
 
 <template>

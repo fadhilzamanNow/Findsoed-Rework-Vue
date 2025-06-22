@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { Tabs, TabPane } from "ant-design-vue";
 import PersonalisationSettings from "./PersonalisationSettings.vue";
-import HistorySettings from "./HistorySettings.vue";
 import BreadCrumbComp from "../BreadCrumb/BreadCrumbComp.vue";
 import { defineAsyncComponent } from "vue";
+import Loading from "../Loading/Loading.vue";
 
 const LazyHistorySettings = defineAsyncComponent(
-  () => import("./HistorySettings.vue")
+  {
+    loader : () => import("./HistorySettings.vue"),
+    loadingComponent : Loading
+  }
 );
 </script>
 

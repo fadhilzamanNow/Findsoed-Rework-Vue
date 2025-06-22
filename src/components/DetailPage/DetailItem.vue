@@ -37,6 +37,7 @@ import "swiper/css/pagination";
 import CommentCard from "./CommentCard.vue";
 import { createComment, getComments } from "../../api/Comment/Comment";
 import { watch } from "vue";
+import Loading from "../Loading/Loading.vue";
 
 type PostType = {
   itemName: string;
@@ -66,11 +67,17 @@ type CommentType = {
 };
 
 const LazyDetailLeafletMap = defineAsyncComponent(
-  () => import("./DetailLeafletMap.vue")
+  {
+    loader : () => import("./DetailLeafletMap.vue"),
+    loadingComponent : Loading
+  }
 );
 
 const LazyDetailItemModal = defineAsyncComponent(
-  () => import("./DetailItemModal.vue")
+  {
+    loader : () => import("./DetailItemModal.vue"),
+    loadingComponent : Loading
+  }
 );
 
 const isModalOpen = ref<boolean>(false);

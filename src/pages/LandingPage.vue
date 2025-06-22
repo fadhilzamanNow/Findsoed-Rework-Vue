@@ -17,6 +17,7 @@ import { useRouter } from "vue-router";
 import { useSeoMeta } from "@unhead/vue";
 import RenderOnViewPortEntry from "../components/LazyLoad/RenderOnViewPortEntry.vue";
 import { defineAsyncComponent } from "vue";
+import Loading from "../components/Loading/Loading.vue";
 
 useSeoMeta({
   title: "SSR RSbuild Landing Page - Findsoed Rework",
@@ -42,28 +43,48 @@ watchEffect(() => {
 });
 
 const LazyFeatureSection = defineAsyncComponent(
-  () => import("../components/LandingPage/FeatureSection.vue")
+{
+  loader :  () => import("../components/LandingPage/FeatureSection.vue"),
+  loadingComponent : Loading
+}
 );
 
 const LazyQuoteSection = defineAsyncComponent(
-  () => import("../components/LandingPage/QuoteSection.vue")
+  {
+    loader : () => import("../components/LandingPage/QuoteSection.vue"),
+    loadingComponent : Loading
+  }
 );
 
 const LazyOtherQuoteSection = defineAsyncComponent(
-  () => import("../components/LandingPage/OtherQuoteSection.vue")
+  {
+    loader : () => import("../components/LandingPage/OtherQuoteSection.vue"),
+    loadingComponent : Loading
+  }
 );
 
 const LazyStatisticSection = defineAsyncComponent(
-  () => import("../components/LandingPage/StatisticSection.vue")
+  {
+    loader : () => import("../components/LandingPage/StatisticSection.vue"),
+    loadingComponent : Loading
+  }
 );
 
 const LazyTestimonialSection = defineAsyncComponent(
-  () => import("../components/LandingPage/TestimonialSection.vue")
+ {
+  loader :  () => import("../components/LandingPage/TestimonialSection.vue"),
+  loadingComponent : Loading
+ }
 );
 
 const LazyUpdateSection = defineAsyncComponent(
-  () => import("../components/LandingPage/UpdateSection.vue")
+  {
+    loader : () => import("../components/LandingPage/UpdateSection.vue"),
+    loadingComponent : Loading
+  }
 );
+
+
 </script>
 
 <template>
