@@ -19,7 +19,7 @@ export default defineConfig({
           index: "./src/index",
         },
       },
-      tools: {
+    /*   tools: {
         rspack: {
           plugins: [
             new RsdoctorRspackPlugin({
@@ -29,7 +29,7 @@ export default defineConfig({
             }),
           ],
         },
-      },
+      }, */
       performance: {
         chunkSplit: {
           maxSize: 500000,
