@@ -1,7 +1,6 @@
 import { defineConfig } from "@rsbuild/core";
 import { pluginVue } from "@rsbuild/plugin-vue";
 import { loadEnv } from "@rsbuild/core";
-import { RsdoctorRspackPlugin } from "@rsdoctor/rspack-plugin";
 
 const { parsed } = loadEnv();
 
@@ -45,17 +44,6 @@ export default defineConfig({
   source: {
     define: {
       BACKEND_URL: JSON.stringify(parsed.PUBLIC_BACKEND_URL),
-    },
-  },
-  tools: {
-    rspack: {
-      plugins: [
-        new RsdoctorRspackPlugin({
-          supports: {
-            generateTileGraph: true,
-          },
-        }),
-      ],
     },
   },
 });
