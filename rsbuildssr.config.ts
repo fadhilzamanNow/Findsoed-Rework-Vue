@@ -25,7 +25,7 @@ export default defineConfig({
           strategy: "split-by-size",
         },
       },
-    /*   tools: {
+      /*   tools: {
         rspack: {
           plugins: [
             new RsdoctorRspackPlugin({
@@ -58,6 +58,7 @@ export default defineConfig({
   source: {
     define: {
       BACKEND_URL: JSON.stringify(parsed.PUBLIC_BACKEND_URL),
+      PRODUCTION_BACKEND_URL: JSON.stringify(parsed.PRODUCTION_BACKEND_URL),
     },
   },
   /* tools: {

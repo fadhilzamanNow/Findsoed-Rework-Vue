@@ -12,8 +12,7 @@ export type CustomSuccessResponse = {
 };
 
 const basePath = axios.create({
-  // @ts-expect-error Variabel didefine dari bundler
-  baseURL: "http://ec2-54-255-245-74.ap-southeast-1.compute.amazonaws.com:3500",
+  baseURL: PRODUCTION_BACKEND_URL,
   timeout: 10000,
 });
 
