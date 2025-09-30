@@ -37,8 +37,7 @@ const { userInfo } = storeToRefs(auth);
 const isExpand = ref(false);
 
 const profileProps = computed<AvatarProps>(() => ({
-  /* @ts-expect-error Variabel didefine dari Bundler */
-  src: `${BACKEND_URL}static/images/${userInfo.value?.imageUrl}`,
+  src: `${userInfo.value?.imageUrl}`,
   size: 36,
   shape: "square",
 }));

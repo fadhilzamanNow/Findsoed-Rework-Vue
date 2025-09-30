@@ -312,7 +312,7 @@ const handleChangeProfile = async (photo: FileType) => {
 const avatarExistProps = computed<AvatarProps>(() => ({
   size: 100,
   /* @ts-expect-error Variabel didefine dari Bundler */
-  src: `${BACKEND_URL}static/images/${userInfo.value?.imageUrl}`,
+  src: `${userInfo.value?.imageUrl}`,
 }));
 
 const avatarNotExistProps = computed<AvatarProps>(() => ({
