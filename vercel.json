@@ -1,29 +1,5 @@
 {
-  "version": 2,
   "buildCommand": "npm run build:rs-ssr",
-  "installCommand": "npm install",
-  "framework": null,
-  "outputDirectory": "dist",
-  "functions": {
-    "api/index.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
-      "dest": "/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/api/index.js"
-    }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  "startCommand": "npm run preview:rs-ssr",
+  "installCommand": "npm install"
 }
