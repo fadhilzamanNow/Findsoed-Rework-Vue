@@ -134,7 +134,7 @@ const handleSetting = () => {
   <nav
     :class="`fixed top-0 left-0 right-0 ${
       authNav ? 'md:ml-16 bg-white ' : ' bg-white/30'
-    } backdrop-blur-md  z-50 border-b border-b-gray-100 shadow-sm `"
+    } backdrop-blur-md  z-20 border-b border-b-gray-100 shadow-sm `"
   >
     <!--  {/* DESKTOP DESIGN */} -->
     <div

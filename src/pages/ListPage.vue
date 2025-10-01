@@ -40,7 +40,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen">
+  <div class="min-h-screen relative">
     <!-- NAVBAR -->
     <Navbar />
     <ListBox />

@@ -3,18 +3,23 @@ import { watchEffect } from "vue";
 import { getAllPost } from "../../api/Post/Post";
 import { usePostStore } from "../../stores/postStore";
 import HeaderListPage from "./HeaderListPage.vue";
+import { useLoadingStore } from "../../stores/loadingStore";
 import ListCard from "./ListCard.vue";
 
 const post = usePostStore();
+const loading = useLoadingStore();
 
 const getAllPostData = async () => {
   try {
+    loading.toggleLoading(true);
     const response = await getAllPost();
     if (response) {
       post.setPost(response.data);
     }
   } catch (e) {
     post.setPost([]);
+  } finally {
+    loading.toggleLoading(false);
   }
 };
 

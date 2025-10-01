@@ -53,7 +53,7 @@ const handleLoading = () => {
     <!-- HALAMAN LOADING -->
     <div
       v-if="registerLoading"
-      class="fixed w-full h-screen flex justify-center items-center bg-black/20 z-51 text-7xl text-blue-600"
+      class="fixed w-full h-screen flex justify-center items-center bg-black/20 z-[9999] text-7xl text-blue-600"
     >
       <LoadingOutlined />
     </div>

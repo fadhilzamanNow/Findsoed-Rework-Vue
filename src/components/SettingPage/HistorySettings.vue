@@ -9,7 +9,7 @@ import {
   getAllUserPosts,
   getUserPostDetailData,
 } from "../../api/Post/Post";
-
+import { useLoadingStore } from "../../stores/loadingStore";
 type UserPostTable = {
   id: number;
   postId: string;
@@ -30,9 +30,12 @@ const postData = ref<UserPostTable[]>([]);
 const postDetail = ref<PostDetailData | null>(null);
 const isSent = ref(false);
 const tableLoading = ref(false);
+const loading = useLoadingStore();
 
 const getUserPostDetail = async (id: string) => {
   try {
+    loading.toggleLoading(true);
+    console.log("find");
     const response = await getUserPostDetailData(id);
     if (response) {
       postDetail.value = response.data;
@@ -43,6 +46,8 @@ const getUserPostDetail = async (id: string) => {
       centered: true,
       zIndex: 99999,
     });
+  } finally {
+    loading.toggleLoading(false);
   }
 };
 
@@ -73,6 +78,7 @@ const handleSubmitEdit = async (
 ) => {
   try {
     if (postDetail.value?.id) {
+      loading.toggleLoading(true);
       const response = await editPost(
         {
           ...(date.length > 1 && { itemLostDate: date }),
@@ -97,11 +103,14 @@ const handleSubmitEdit = async (
       centered: true,
       zIndex: 99999,
     });
+  } finally {
+    loading.toggleLoading(false);
   }
 };
 
 const getUserPosts = async () => {
   try {
+    loading.toggleLoading(true);
     tableLoading.value = true;
     const response = await getAllUserPosts();
     if (response) {
@@ -124,6 +133,8 @@ const getUserPosts = async () => {
       centered: true,
       zIndex: 99999,
     });
+  } finally {
+    loading.toggleLoading(false);
   }
 };
 

@@ -49,7 +49,7 @@ const toggleSidebar = () => {
 
 <template>
   <aside
-    :class="`fixed top-0 left-0 z-51 h-[100vh] hidden md:block`"
+    :class="`fixed top-0 left-0 z-30 h-[100vh] hidden md:block`"
     ref="sidebarRef"
   >
     <nav

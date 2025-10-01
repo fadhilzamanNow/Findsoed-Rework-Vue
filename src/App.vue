@@ -6,15 +6,21 @@ import { findUserInfo } from "./api/Auth/Auth";
 import { storeToRefs } from "pinia";
 import { useHead } from "@unhead/vue";
 import { validateTokenHandler } from "./utils/validateToken";
+import OverlayScreen from "./components/Overlay/OverlayScreen.vue";
+import { useLoadingStore } from "./stores/loadingStore";
+
 useHead({
   title: "Findsoed Rework",
 });
 
 const auth = useAuthStore();
+const loading = useLoadingStore();
 const { authToken } = storeToRefs(auth);
+const { isLoading } = storeToRefs(loading);
 
 const findInfo = async () => {
   try {
+    loading.toggleLoading(true);
     const response = await findUserInfo();
     if (response) {
       auth.setUserInfo({
@@ -28,6 +34,8 @@ const findInfo = async () => {
   } catch (e) {
     auth.setAuthToken(null);
     auth.setUserInfo(null);
+  } finally {
+    loading.toggleLoading(false);
   }
 };
 
@@ -56,5 +64,8 @@ watchEffect(() => {
 </script>
 
 <template>
-  <RouterView />
+  <div class="w-full h-screen relative">
+    <OverlayScreen v-if="isLoading" />
+    <RouterView />
+  </div>
 </template>

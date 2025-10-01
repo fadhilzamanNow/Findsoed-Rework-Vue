@@ -9,6 +9,7 @@ import { createPost, itemLocationType } from "../../api/Post/Post";
 import { useRouter } from "vue-router";
 import BreadCrumbComp from "../BreadCrumb/BreadCrumbComp.vue";
 import { CustomErrorResponse } from "../../api/baseApi";
+import { useLoadingStore } from "../../stores/loadingStore";
 
 const mapInfo = reactive<itemLocationType>({
   latitude: null,
@@ -19,6 +20,7 @@ const itemName = ref<string>("");
 const itemCategory = ref<string>();
 const itemDescription = ref<string>("");
 const itemDate = ref<string | string[]>();
+const loading = useLoadingStore();
 
 const LazyLeafletMap = defineAsyncComponent(() => import("./LeafletMap.vue"));
 
@@ -65,6 +67,7 @@ const isDisabled = computed(() => {
 
 const handleSubmit = async () => {
   try {
+    loading.toggleLoading(true);
     const newPost = new FormData();
     newPost.append("itemName", itemName.value);
     newPost.append("itemCategory", itemCategory.value as string);
@@ -99,6 +102,8 @@ const handleSubmit = async () => {
       centered: true,
       zIndex: 999999,
     });
+  } finally {
+    loading.toggleLoading(false);
   }
 };
 

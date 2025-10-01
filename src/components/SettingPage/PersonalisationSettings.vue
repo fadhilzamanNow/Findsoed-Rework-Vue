@@ -23,6 +23,7 @@ import zxcvbn from "zxcvbn";
 import { editDataProfile, editPhotoProfile } from "../../api/Auth/Auth";
 import { FileType } from "ant-design-vue/es/upload/interface";
 import estoolkit from "es-toolkit/compat";
+import { useLoadingStore } from "../../stores/loadingStore";
 
 const auth = useAuthStore();
 const { userInfo } = storeToRefs(auth);
@@ -34,6 +35,7 @@ const showOPassword = ref(false);
 const showPassword = ref(false);
 const showCPassword = ref(false);
 const fileList = ref<UploadProps["fileList"]>([]);
+const loading = useLoadingStore();
 
 const nameProps = computed<InputProps>(() => ({
   placeholder: userInfo.value?.username,
@@ -248,6 +250,7 @@ const isPasswordSame = computed(() => {
 const handleChangeData = async (e: MouseEvent) => {
   e.preventDefault();
   try {
+    loading.toggleLoading(true);
     const response = await editDataProfile({
       ...(isPhoneValid.value && { userPhoneNumber: phoneVal.value }),
       ...(isPasswordSame.value &&
@@ -274,11 +277,14 @@ const handleChangeData = async (e: MouseEvent) => {
       centered: true,
       zIndex: 999999,
     });
+  } finally {
+    loading.toggleLoading(false);
   }
 };
 
 const handleChangeProfile = async (photo: FileType) => {
   try {
+    loading.toggleLoading(true);
     const sendData = new FormData();
 
     if (photo) {
@@ -306,6 +312,8 @@ const handleChangeProfile = async (photo: FileType) => {
       centered: true,
       zIndex: 99999,
     });
+  } finally {
+    loading.toggleLoading(false);
   }
 };
 

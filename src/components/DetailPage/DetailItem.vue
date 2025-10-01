@@ -7,6 +7,7 @@ import {
   ImageProps,
   InputProps,
   Modal,
+  Skeleton,
 } from "ant-design-vue";
 import {
   computed,
@@ -37,6 +38,7 @@ import "swiper/css/pagination";
 import CommentCard from "./CommentCard.vue";
 import { createComment, getComments } from "../../api/Comment/Comment";
 import { watch } from "vue";
+import { useLoadingStore } from "../../stores/loadingStore";
 
 type PostType = {
   itemName: string;
@@ -79,16 +81,21 @@ const postComment = ref<CommentType[]>([]);
 const commenBlock = useTemplateRef("commentBlock");
 const isModalOpenMap = ref(false);
 const firstSent = ref(false);
+const loading = useLoadingStore();
 
 const findDetailUserPost = async (id: string) => {
   try {
+    loading.toggleLoading(true);
     const response = await getDetailPost(id);
     if (response) {
       window.scrollTo(0, 0);
       postDetail.value = response.data;
       isBeingSent.value = true;
     }
-  } catch (e) {}
+  } catch (e) {
+  } finally {
+    loading.toggleLoading(false);
+  }
 };
 
 const handleGetPostComment = async () => {
@@ -137,6 +144,7 @@ const inputProps = computed<InputProps>(() => ({
 
 const handleAddComment = async () => {
   try {
+    loading.toggleLoading(true);
     const response = await createComment(
       commentVal.value,
       postDetail.value?.id as string
@@ -150,6 +158,8 @@ const handleAddComment = async () => {
     }
   } catch (e) {
     return false;
+  } finally {
+    loading.toggleLoading(false);
   }
 };
 
@@ -167,7 +177,7 @@ const imageDetailProps = computed(() => {
 });
 
 const detailCreateProps = computed<AvatarProps>(() => ({
-  src: `http://localhost:3500/static/images/${postDetail.value?.userProfile}`,
+  src: `${postDetail.value?.userProfile}`,
   shape: "square",
 }));
 
@@ -251,7 +261,8 @@ watch(
         </Swiper>
 
         <!-- DETAIL -->
-        <div class="flex flex-col gap-1 lg:gap-5 w-full lg:w-2/5">
+        <Skeleton active v-if="loading.isLoading" />
+        <div class="flex flex-col gap-1 lg:gap-5 w-full lg:w-2/5" v-else>
           <Flex gap="10" align="center" class="w-full sm:min-w-[400px] pb-2">
             <Avatar v-if="postDetail?.userProfile" v-bind="detailCreateProps" />
             <Avatar v-else>{{ postDetail?.userName.slice(0, 2) }}</Avatar>

@@ -16,6 +16,7 @@ import {
   Modal,
   ModalProps,
   Select,
+  Skeleton,
   Textarea,
   TextAreaProps,
 } from "ant-design-vue";
@@ -26,6 +27,7 @@ import { useAuthStore } from "../../stores/authStore";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import { SelectProps } from "ant-design-vue/es/vc-select";
+import { useLoadingStore } from "../../stores/loadingStore";
 import lodash from "lodash";
 dayjs.extend(localizedFormat);
 
@@ -56,7 +58,6 @@ type actionPropsType = {
 const { record, postData, onDetail, onDelete, onEdit } =
   defineProps<actionPropsType>();
 const { userInfo } = storeToRefs(useAuthStore());
-
 const isModalOpen = ref<boolean>(false);
 const isEditOpen = ref<boolean>(false);
 const isDeleteOpen = ref<boolean>(false);
@@ -64,6 +65,7 @@ const isDeleteOpen = ref<boolean>(false);
 const editDate = ref("");
 const editStatus = ref("");
 const editDetail = ref("");
+const loading = useLoadingStore();
 
 watchEffect(() => {
   if (isModalOpen.value || isEditOpen.value || isDeleteOpen.value) {
@@ -92,7 +94,7 @@ const modalDetailProps = computed<ModalProps>(() => ({
   onOk: () => (isModalOpen.value = !isModalOpen.value),
   title: postData?.itemName,
   footer: null,
-  zIndex: 99999,
+  zIndex: 9990,
   onCancel: () => (isModalOpen.value = !isModalOpen.value),
 }));
 
@@ -128,7 +130,7 @@ const modalDeleteProps = computed<ModalProps>(() => ({
   centered: true,
   onOk: () => (isDeleteOpen.value = !isDeleteOpen.value),
   footer: null,
-  zIndex: 99999,
+  zIndex: 9990,
   onCancel: () => (isDeleteOpen.value = !isDeleteOpen.value),
 }));
 
@@ -202,7 +204,8 @@ const deleteButtonProps = computed<ButtonProps>(() => ({
     </Button>
   </Flex>
   <Modal v-bind="modalDetailProps">
-    <Flex vertical gap="20">
+    <Skeleton active v-if="loading.isLoading" />
+    <Flex vertical gap="20" v-else>
       <div class="grid grid-cols-2">
         <Flex vertical gap="4">
           <h1 class="text-xs font-medium">Kategori</h1>
@@ -242,7 +245,8 @@ const deleteButtonProps = computed<ButtonProps>(() => ({
   </Modal>
 
   <Modal v-bind="modalDeleteProps">
-    <Flex vertical gap="20">
+    <Skeleton active v-if="loading.isLoading" />
+    <Flex vertical gap="20" v-else>
       <Flex align="center" gap="20">
         <div class="text-red-500">
           <WarningFilled :style="{ fontSize: '26px' }" />
@@ -262,7 +266,8 @@ const deleteButtonProps = computed<ButtonProps>(() => ({
   </Modal>
 
   <Modal v-bind="modalEditProps" ref="editModal" id="editModal">
-    <Flex vertical gap="16" justify="center" class="w-full">
+    <Skeleton active v-if="loading.isLoading" />
+    <Flex vertical gap="16" justify="center" class="w-full" v-else>
       <Flex vertical class="w-full" gap="8">
         <label for="item">Nama Barang</label>
         <Input v-bind="inputItemNameProps" />

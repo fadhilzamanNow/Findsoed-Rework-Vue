@@ -106,7 +106,7 @@ const imageProps = computed<{ src: string; class: string; alt: string }>(
             <Avatar
               v-if="userProfile"
               size="small"
-              :src="`http://localhost:3500/static/images/${userProfile}`"
+              :src="`${userProfile}`"
               shape="square"
             />
             <Avatar v-else shape="square" size="small">{{
