@@ -12,6 +12,23 @@ dist/
 !.vscode/extensions.json
 .idea
 
+# Environment
 .env
 .env.development
 .env.production
+.env.local
+.env.*.local
+
+# Vercel
+.vercel
+.vercel/*
+
+# Build
+.rsbuild
+.rsdoctor
+*.tsbuildinfo
+
+# Cache
+.cache
+.temp
+*.log

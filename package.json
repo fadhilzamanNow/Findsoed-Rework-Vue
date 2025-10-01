@@ -6,6 +6,7 @@
     "build:rs-ssr": "cross-env NODE_ENV=production rsbuild build -c ./rsbuildssr.config.ts",
     "dev:rs-ssr": "cross-env NODE_ENV=development node ./server.mjs ",
     "preview:rs-ssr": "node ./prod-server.mjs",
+    "vercel-build": "npm run build:rs-ssr",
     "build:rs-csr": "cross-env NODE_ENV=production rsbuild build -c ./rsbuildcsr.config.ts",
     "dev:rs-csr": "cross-env NODE_ENV=development rsbuild dev -c ./rsbuildcsr.config.ts",
     "preview:rs-csr": "rsbuild preview --port 3050",

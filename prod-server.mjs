@@ -30,7 +30,7 @@ const serverRender = async (_req, res) => {
   res.status(200).set({ "Content-Type": "text/html" }).send(html);
 };
 
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3050;
 
 export async function preview() {
   const app = express();

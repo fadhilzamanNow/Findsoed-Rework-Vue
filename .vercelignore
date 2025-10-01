@@ -1,0 +1,19 @@
+node_modules
+.git
+.vscode
+.ebextensions
+*.log
+.DS_Store
+.env.local
+.env.*.local
+coverage
+.cache
+.rsbuild
+.rsdoctor
+*.md
+!README.md
+
+# Keep only production files
+src
+public
+!dist
