@@ -1,13 +1,12 @@
 {
-  "buildCommand": "npm run build:rs-ssr",
-  "devCommand": "npm run dev:rs-ssr",
+  "buildCommand": "npm run build:rs-csr",
   "installCommand": "npm install",
   "framework": null,
   "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/api/index"
+      "destination": "dist/index.html"
     }
   ],
   "functions": {
