@@ -16,7 +16,7 @@ export default defineConfig({
       },
       source: {
         entry: {
-          index: "./src/index",
+          index: "./src/index.ts",
         },
       },
       performance: {
@@ -47,7 +47,7 @@ export default defineConfig({
       },
       source: {
         entry: {
-          index: "./src/index.server",
+          index: "./src/index.server.ts",
         },
       },
     },
