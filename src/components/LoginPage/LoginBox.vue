@@ -8,13 +8,13 @@ import { findUserInfo, loginUser } from "../../api/Auth/Auth";
 import { ChangeEvent } from "ant-design-vue/es/_util/EventInterface";
 import { useAuthStore } from "../../stores/authStore";
 import { validateTokenHandler } from "../../utils/validateToken";
-
+import { useLoadingStore } from "../../stores/loadingStore";
 const emailVal = ref("");
 const passVal = ref("");
 const passShow = ref(false);
 const auth = useAuthStore();
 const router = useRouter();
-
+const loading = useLoadingStore();
 const emit = defineEmits<{ toggleLoading: [] }>();
 
 const togglePass = () => {
@@ -46,7 +46,7 @@ const passProps = computed<InputProps>(() => ({
 const handleLogin = async () => {
   if (isEmailValid.value && passVal.value.length > 1) {
     try {
-      emit("toggleLoading");
+      loading.toggleLoading(true);
       const response = await loginUser({
         email: emailVal.value,
         password: passVal.value,
@@ -55,7 +55,6 @@ const handleLogin = async () => {
         localStorage.setItem("authToken", response.data.token);
         auth.setAuthToken(response.data.token as string);
         if (response.data) {
-          emit("toggleLoading");
           const findUser = await findUserInfo();
           if (findUser) {
             auth.setUserInfo({
@@ -81,7 +80,6 @@ const handleLogin = async () => {
         });
       }
     } catch (e) {
-      emit("toggleLoading");
       Modal.error({
         title: "Gagal untuk Login",
         // @ts-expect-error error response message is still random
@@ -89,6 +87,8 @@ const handleLogin = async () => {
         centered: true,
         zIndex: 99999,
       });
+    } finally {
+      loading.toggleLoading(false);
     }
   }
 };

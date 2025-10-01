@@ -11,7 +11,7 @@ import lodash from "lodash";
 import parsePhoneNumber from "libphonenumber-js";
 import { registerUser } from "../../api/Auth/Auth";
 import { CustomErrorResponse, CustomSuccessResponse } from "../../api/baseApi";
-
+import { useLoadingStore } from "../../stores/loadingStore";
 type PhoneValidType = {
   success: boolean;
   message: string;
@@ -27,7 +27,7 @@ const cPassVal = ref<string>("");
 const cPassShow = ref<boolean>(false);
 const phoneVal = ref<string>("");
 const navigate = useRouter();
-
+const loading = useLoadingStore();
 const isPhoneValid = computed<PhoneValidType>(() => {
   if (parsePhoneNumber(phoneVal.value, "ID")?.isValid()) {
     return {
@@ -276,9 +276,9 @@ const inputCPassProps = computed<InputProps | { class?: string }>(() => ({
 }));
 
 const handleRegister = async () => {
-  if (isNoError) {
+  if (isNoError.value) {
     try {
-      emit("toggleLoading");
+      loading.toggleLoading(true);
       const response = await registerUser({
         username: userVal.value,
         email: emailVal.value,
@@ -287,7 +287,6 @@ const handleRegister = async () => {
       });
 
       if (response) {
-        emit("toggleLoading");
         Modal.success({
           title: "Berhasil Melakukan Registrasi",
           content: (response as CustomSuccessResponse).message,
@@ -296,12 +295,13 @@ const handleRegister = async () => {
         });
       }
     } catch (err) {
-      emit("toggleLoading");
       Modal.error({
         title: "Gagal Melakukan Registrasi",
         content: (err as CustomErrorResponse).message,
         centered: true,
       });
+    } finally {
+      loading.toggleLoading(false);
     }
   }
 };
