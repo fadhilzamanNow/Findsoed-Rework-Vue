@@ -12,7 +12,7 @@ export type CustomSuccessResponse = {
 };
 
 const basePath = axios.create({
-  baseURL: PRODUCTION_BACKEND_URL,
+  baseURL: "http://ec2-54-255-245-74.ap-southeast-1.compute.amazonaws.com:3500",
   timeout: 10000,
 });
 
