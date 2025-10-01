@@ -52,8 +52,7 @@ watchEffect(() => {
 
 const imageProps = computed<{ src: string; class: string; alt: string }>(
   () => ({
-    // @ts-expect-error Variabel didefine dari bundler
-    src: `${BACKEND_URL}static/images/${images[0]}`,
+    src: `${images[0]}`,
     class: "w-full h-[120px] object-cover rounded-t-md bg-gray-300",
     alt: `${images[0]}`,
   })

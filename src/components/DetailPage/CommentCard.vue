@@ -13,8 +13,7 @@ const { userName, userProfile, message, created_at } =
   defineProps<CommentType>();
 
 const commentAvatarProps = computed<AvatarProps>(() => ({
-  // @ts-expect-error Variabel didefine dari bundler
-  src: `${BACKEND_URL}static/images/${userProfile}`,
+  src: `${userProfile}`,
   shape: "square",
   class: "select-none",
 }));

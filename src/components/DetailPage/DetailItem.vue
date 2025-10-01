@@ -156,8 +156,7 @@ const handleAddComment = async () => {
 const imageDetailProps = computed(() => {
   return (imageName: string): ImageProps => {
     return {
-      /* @ts-ignore */
-      src: `${BACKEND_URL}static/images/${imageName}`,
+      src: `${imageName}`,
       width: "100%",
       height: "100%",
       class:
