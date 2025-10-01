@@ -10,10 +10,6 @@ coverage
 .cache
 .rsbuild
 .rsdoctor
-*.md
-!README.md
 
-# Keep only production files
-src
-public
+# Keep dist after build
 !dist
